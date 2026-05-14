@@ -1,0 +1,58 @@
+<odoo>
+
+    <template id="portal_my_loans" name="Mis Préstamos">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">Mis Préstamos</t>
+            <div class="container mt-4">
+                <h3>Mis Préstamos</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Libro</th>
+                            <th>Fecha de Préstamo</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="loans" t-as="loan">
+                            <tr>
+                                <td><t t-esc="loan.book_id.name"/></td>
+                                <td><t t-esc="loan.loan_date"/></td>
+                                <td>
+                                    <t t-if="loan.state == 'ongoing'">En curso</t>
+                                    <t t-elif="loan.state == 'returned'">Devuelto</t>
+                                    <t t-elif="loan.state == 'late'">Atrasado</t>
+                                </td>
+                                <td>
+                                    <t t-if="loan.state == 'ongoing'">
+                                        <a t-attf-href="/my/loans/renew/#{loan.id}"
+                                           class="btn btn-sm btn-primary">
+                                            Renovar
+                                        </a>
+                                    </t>
+                                    <t t-else="">—</t>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_menu_loans" inherit_id="portal.portal_my_home" priority="20">
+        <xpath expr="//div[hasclass('o_portal_my_home')]" position="inside">
+            <div class="o_portal_docs">
+                <h4 class="mb-3">Biblioteca</h4>
+                <a href="/my/loans" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">Mis Préstamos</h5>
+                        <p class="mb-0 text-muted">Consulta y renueva tus préstamos activos</p>
+                    </div>
+                </a>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

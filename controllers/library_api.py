@@ -1,6 +1,5 @@
 from odoo import http
 from odoo.http import request
-
 import json
 
 
@@ -14,13 +13,8 @@ class LibraryAPI(http.Controller):
         csrf=False
     )
     def get_book(self, isbn=None, **kwargs):
-
         if not isbn:
-
-            data = {
-                'error': 'ISBN requerido'
-            }
-
+            data = {'error': 'ISBN requerido'}
             return request.make_response(
                 json.dumps(data),
                 headers=[('Content-Type', 'application/json')]
@@ -31,11 +25,7 @@ class LibraryAPI(http.Controller):
         ], limit=1)
 
         if not book:
-
-            data = {
-                'error': 'Libro no encontrado'
-            }
-
+            data = {'error': 'Libro no encontrado'}
             return request.make_response(
                 json.dumps(data),
                 headers=[('Content-Type', 'application/json')]
@@ -52,3 +42,21 @@ class LibraryAPI(http.Controller):
             json.dumps(data),
             headers=[('Content-Type', 'application/json')]
         )
+
+    @http.route('/my/loans', type='http', auth='user', website=True)
+    def my_loans(self, **kwargs):
+        partner = request.env.user.partner_id
+        loans = request.env['library.loan'].sudo().search([
+            ('member_id', '=', partner.id)
+        ])
+        return request.render('library_management.portal_my_loans', {
+            'loans': loans,
+        })
+
+    @http.route('/my/loans/renew/<int:loan_id>', type='http', auth='user', website=True)
+    def renew_loan(self, loan_id, **kwargs):
+        loan = request.env['library.loan'].sudo().browse(loan_id)
+        if loan and loan.member_id == request.env.user.partner_id:
+            if loan.state == 'ongoing':
+                loan.action_renew()
+        return request.redirect('/my/loans')
