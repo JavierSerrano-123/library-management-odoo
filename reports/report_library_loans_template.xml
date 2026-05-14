@@ -1,0 +1,42 @@
+<odoo>
+    <template id="report_library_loans_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="loan">
+                <t t-call="web.external_layout">
+                   
+                    <div class="header">
+                        <img src="/library_management/static/src/img/icon.png" width="120"/>
+                        <h2>Préstamo de Libro</h2>
+                    </div>
+
+                    <div class="page">
+                        <p>
+                            <strong>Socio:</strong>
+                            <span t-field="loan.member_id"/>
+                        </p>
+
+                        <p>
+                            <strong>Libro:</strong>
+                            <span t-field="loan.book_id"/>
+                        </p>
+
+                        <p>
+                            <strong>Fecha de Préstamo:</strong>
+                            <span t-field="loan.loan_date"/>
+                        </p>
+
+                        <p>
+                            <strong>Fecha de Devolución:</strong>
+                            <span t-field="loan.return_date"/>
+                        </p>
+
+                        <p>
+                            <strong>Estado:</strong>
+                            <span t-field="loan.state"/>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

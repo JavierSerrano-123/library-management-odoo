@@ -1,0 +1,23 @@
+<odoo>
+    <record id="ir_cron_check_overdue_loans" model="ir.cron">
+
+        <field name="name">
+            Verificar préstamos vencidos
+        </field>
+
+        <field name="model_id" ref="model_library_loan"/>
+
+        <field name="state">code</field>
+
+        <field name="code">
+            model.cron_check_overdue_loans()
+        </field>
+
+        <field name="interval_number">1</field>
+
+        <field name="interval_type">days</field>
+
+        <field name="active">True</field>
+
+    </record>
+</odoo>

@@ -1,0 +1,107 @@
+<odoo>
+
+    <!-- Vista formulario -->
+    <record id="view_library_loan_form"
+            model="ir.ui.view">
+
+        <field name="name">library.loan.form</field>
+
+        <field name="model">library.loan</field>
+
+        <field name="arch" type="xml">
+
+            <form string="Préstamo">
+
+                <header>
+
+                    <button name="action_mark_returned"
+                            type="object"
+                            string="Marcar Devuelto"
+                            class="btn-primary"
+                            groups="library_management.group_library_librarian"/>
+
+                    <button name="action_mark_late"
+                            type="object"
+                            string="Marcar Atrasado"
+                            class="btn-secondary"
+                            groups="library_management.group_library_librarian"/>
+
+                    <button name="%(action_report_library_loans)d"
+                            string="Imprimir Reporte"
+                            type="action"
+                            groups="library_management.group_library_librarian"/>
+
+                </header>
+
+                <sheet>
+
+                    <group>
+
+                        <field name="member_id"/>
+
+                        <field name="book_id"/>
+
+                        <field name="loan_date"/>
+
+                        <field name="return_date"/>
+
+                        <field name="state" readonly="1"/>
+
+                    </group>
+
+                </sheet>
+
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vista lista -->
+    <record id="view_library_loan_list"
+            model="ir.ui.view">
+
+        <field name="name">library.loan.list</field>
+
+        <field name="model">library.loan</field>
+
+        <field name="arch" type="xml">
+
+            <list string="Préstamos">
+
+                <field name="member_id"/>
+
+                <field name="book_id"/>
+
+                <field name="loan_date"/>
+
+                <field name="return_date"/>
+
+                <field name="state"/>
+
+            </list>
+
+        </field>
+
+    </record>
+
+    <!-- Acción -->
+    <record id="action_library_loans"
+            model="ir.actions.act_window">
+
+        <field name="name">Préstamos</field>
+
+        <field name="res_model">library.loan</field>
+
+        <field name="view_mode">list,form</field>
+
+    </record>
+
+    <!-- Menú -->
+    <menuitem id="menu_library_loans"
+              name="Préstamos"
+              parent="menu_library_root"
+              action="action_library_loans"
+              groups="library_management.group_library_librarian"/>
+
+</odoo>

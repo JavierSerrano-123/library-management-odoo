@@ -1,0 +1,9 @@
+<odoo>
+    <record id="action_report_library_loans" model="ir.actions.report">
+        <field name="name">Reporte de Prestamos</field>
+        <field name="model">library.loan</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">library_management.report_library_loans_template</field>
+        <field name="report_file">library_management.report_library_loans_template</field>
+    </record>
+</odoo>

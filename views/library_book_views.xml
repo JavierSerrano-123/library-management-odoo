@@ -1,0 +1,137 @@
+<odoo>
+
+    <!-- SEARCH VIEW -->
+    <record id="view_library_book_search"
+            model="ir.ui.view">
+
+        <field name="name">library.book.search</field>
+
+        <field name="model">library.book</field>
+
+        <field name="arch" type="xml">
+
+            <search>
+
+                <field name="name"/>
+
+                <field name="author"/>
+
+                <field name="isbn"/>
+
+                <filter string="Disponibles"
+                        name="available"
+                        domain="[('available','=',True)]"/>
+
+                <filter string="No Disponibles"
+                        name="not_available"
+                        domain="[('available','=',False)]"/>
+
+            </search>
+
+        </field>
+
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_library_book_form"
+            model="ir.ui.view">
+
+        <field name="name">library.book.form</field>
+
+        <field name="model">library.book</field>
+
+        <field name="arch" type="xml">
+
+            <form string="Libro">
+
+                <sheet>
+
+                    <group>
+
+                        <field name="name"/>
+
+                        <field name="author"/>
+
+                        <field name="isbn"/>
+
+                        <field name="publication_date"/>
+
+                        <field name="years_since_publication"
+                               readonly="1"/>
+
+                        <field name="available"
+                               groups="library_management.group_library_librarian"/>
+
+                        <!-- PRODUCTO POS -->
+                        <field name="product_id"
+                               groups="library_management.group_library_librarian"/>
+
+                    </group>
+
+                </sheet>
+
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- LIST VIEW -->
+    <record id="view_library_book_list"
+            model="ir.ui.view">
+
+        <field name="name">library.book.list</field>
+
+        <field name="model">library.book</field>
+
+        <field name="arch" type="xml">
+
+            <list string="Catálogo de Libros">
+
+                <field name="name"/>
+
+                <field name="author"/>
+
+                <field name="isbn"/>
+
+                <field name="publication_date"/>
+
+                <field name="years_since_publication"/>
+
+                <field name="available"
+                       groups="library_management.group_library_librarian"/>
+
+                <field name="product_id"
+                       groups="library_management.group_library_librarian"/>
+
+            </list>
+
+        </field>
+
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_library_books"
+            model="ir.actions.act_window">
+
+        <field name="name">Libros</field>
+
+        <field name="res_model">library.book</field>
+
+        <field name="view_mode">list,form</field>
+
+        <field name="search_view_id"
+               ref="view_library_book_search"/>
+
+    </record>
+
+    <!-- MENUS -->
+    <menuitem id="menu_library_root"
+              name="Biblioteca"/>
+
+    <menuitem id="menu_library_books"
+              name="Libros"
+              parent="menu_library_root"
+              action="action_library_books"/>
+
+</odoo>

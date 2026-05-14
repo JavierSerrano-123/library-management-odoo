@@ -1,0 +1,17 @@
+<odoo>
+
+    <record id="group_library_librarian"
+            model="res.groups">
+
+        <field name="name">Bibliotecario</field>
+
+    </record>
+
+    <record id="group_library_public"
+            model="res.groups">
+
+        <field name="name">Usuario Público</field>
+
+    </record>
+
+</odoo>

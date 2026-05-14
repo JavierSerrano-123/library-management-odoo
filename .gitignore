@@ -1,0 +1,25 @@
+# Odoo
+*.pyc
+.odoo_module_dev_data
+odoo.conf
+*.log
+filestore/
+ 
+# Database
+*.sql
+*.dump
+ 
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+ 
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+ 
+# Variables de entorno
+.env
+.env.local
