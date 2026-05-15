@@ -239,26 +239,52 @@ curl "http://localhost:8069/api/book?isbn=0000000000000"
 ## Capturas
 
 ### Dashboard principal
-![Dashboard](screenshots/dashboard.png)
+
+<img width="1362" height="683" alt="Dashboard principal" src="https://github.com/user-attachments/assets/fc0e338a-90ec-4eff-8420-1a44ba9b568b" />
+
+---
 
 ### Gestión de socios
-![Members](screenshots/members.png)
+
+<img width="874" height="669" alt="Gestión de socios" src="https://github.com/user-attachments/assets/3a6f3113-826a-4ea6-9409-847093f8e2eb" />
+
+---
 
 ### Catálogo de libros
-![Books](screenshots/books.png)
+
+<img width="1366" height="684" alt="Catálogo de libros" src="https://github.com/user-attachments/assets/63481cb6-0171-49aa-ad12-0c5712f1dfa3" />
+
+---
 
 ### Gestión de préstamos
-![Loans](screenshots/loans.png)
+
+<img width="1366" height="692" alt="Gestión de préstamos" src="https://github.com/user-attachments/assets/084c7623-f557-4aa0-a522-95ad21cb1c28" />
+
+---
 
 ### Portal del socio
-![Portal](screenshots/portal.png)
+
+<img width="1364" height="689" alt="Portal del socio" src="https://github.com/user-attachments/assets/f785b413-087d-4cce-b27d-6f8a55ea3ba2" />
+
+<br><br>
+
+<img width="1366" height="685" alt="Renovación de préstamo desde portal" src="https://github.com/user-attachments/assets/cb737d27-6717-46da-8615-9d6df7d5c4d1" />
+
+---
 
 ### Punto de Venta (POS)
-![POS](screenshots/pos.png)
+
+<img width="1357" height="677" alt="POS biblioteca" src="https://github.com/user-attachments/assets/9a289374-9987-4ca2-b929-e67e4c34800f" />
+
+<br><br>
+
+<img width="1359" height="635" alt="Validación POS libro no disponible" src="https://github.com/user-attachments/assets/ab2e5eef-26c0-4bb8-bbe7-d95f229d6180" />
+
+---
 
 ### API REST en funcionamiento
-![API](screenshots/api.png)
 
+<img width="575" height="301" alt="API REST funcionando" src="https://github.com/user-attachments/assets/726ea067-0b21-41b4-aab3-d271cc0e0075" />
 ---
 
 ## Decisiones técnicas
