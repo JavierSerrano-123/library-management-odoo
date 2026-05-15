@@ -5,7 +5,7 @@
                 <t t-call="web.external_layout">
                    
                     <div class="header">
-                        <img src="/library_management/static/src/img/icon.png" width="120"/>
+                        <img src="/library_management/static/description/icon.png" width="120"/>
                         <h2>Préstamo de Libro</h2>
                     </div>
 

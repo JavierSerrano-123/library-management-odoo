@@ -5,6 +5,7 @@ from odoo.exceptions import ValidationError
 class LibraryLoan(models.Model):
     _name = 'library.loan'
     _description = 'Préstamo de Libro'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     member_id = fields.Many2one(
         'res.partner',
@@ -91,7 +92,10 @@ class LibraryLoan(models.Model):
                     loan.state = 'late'
                     if loan.member_id.email:
                         loan.message_post(
-                            body=f"El préstamo del libro '{loan.book_id.name}' se encuentra vencido."
+                            body=f"El préstamo del libro '{loan.book_id.name}' se encuentra vencido.",
+                            subject="Préstamo vencido",
+                            message_type='email',
+                            subtype_xmlid='mail.mt_comment',
                         )
 
     @api.model

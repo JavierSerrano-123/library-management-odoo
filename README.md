@@ -14,7 +14,9 @@ Cubre socios, catálogo de libros, préstamos, automatizaciones, seguridad por r
 - [Usuarios de prueba](#usuarios-de-prueba)
 - [API REST](#api-rest)
 - [Casos de prueba](#casos-de-prueba)
+- [Capturas](#capturas)
 - [Decisiones técnicas](#decisiones-técnicas)
+- [Limitaciones conocidas](#limitaciones-conocidas)
 - [Estructura del módulo](#estructura-del-módulo)
 
 ---
@@ -48,12 +50,12 @@ pip install -r odoo/requirements.txt
 createdb odoo19
 
 # 5. Lanzar Odoo
-python odoo/odoo-bin \
-  --addons-path=odoo/addons \
-  --db_host=localhost \
-  --db_user=TU_USUARIO_POSTGRES \
-  --db_password=TU_PASSWORD_POSTGRES \
-  -d odoo19 \
+python odoo/odoo-bin ^
+  --addons-path=odoo/addons ^
+  --db_host=localhost ^
+  --db_user=TU_USUARIO_POSTGRES ^
+  --db_password=TU_PASSWORD_POSTGRES ^
+  -d odoo19 ^
   --without-demo=all
 ```
 
@@ -71,9 +73,9 @@ Odoo quedará disponible en `http://localhost:8069`.
 Para actualizar el módulo tras cambios en el código:
 
 ```bash
-python odoo/odoo-bin -d odoo19 -u library_management --stop-after-init \
-  --db_host=localhost \
-  --db_user=TU_USUARIO_POSTGRES \
+python odoo/odoo-bin -d odoo19 -u library_management --stop-after-init ^
+  --db_host=localhost ^
+  --db_user=TU_USUARIO_POSTGRES ^
   --db_password=TU_PASSWORD_POSTGRES
 ```
 
@@ -139,7 +141,7 @@ Endpoint público para consultar disponibilidad de libros por ISBN (ver sección
 
 ## Usuarios de prueba
 
-Los usuarios se crean manualmente desde **Settings → Users**:
+Los usuarios deben crearse manualmente desde **Settings → Users** y asignarse a los grupos correspondientes.
 
 | Usuario | Rol | Notas |
 |---|---|---|
@@ -157,7 +159,7 @@ Los usuarios se crean manualmente desde **Settings → Users**:
 GET /api/book?isbn=<ISBN>
 ```
 
-**Respuesta exitosa:**
+**Respuesta exitosa — HTTP 200 OK**
 ```json
 {
   "title": "Learning SQL",
@@ -167,7 +169,7 @@ GET /api/book?isbn=<ISBN>
 }
 ```
 
-**ISBN no encontrado:**
+**ISBN no encontrado — HTTP 404 Not Found**
 ```json
 {
   "error": "Libro no encontrado"
@@ -191,12 +193,12 @@ curl "http://localhost:8069/api/book?isbn=9780596520830"
 ### CP-02 — Bloqueo por libro no disponible
 **Precondición:** Libro con estado "No disponible".  
 **Pasos:** Intentar crear préstamo con ese libro desde Biblioteca → Préstamos → Nuevo.  
-**Resultado:** Error: _"El libro no está disponible para préstamo."_
+**Resultado:** Error: _"El libro no está disponible para préstamo."_  
 
 ### CP-03 — Límite de 5 préstamos por socio
 **Precondición:** Socio con 5 préstamos activos.  
 **Pasos:** Intentar crear un sexto préstamo para ese socio.  
-**Resultado:** Error: _"El socio ya tiene 5 préstamos activos."_
+**Resultado:** Error: _"El socio ya tiene 5 préstamos activos."_  
 
 ### CP-04 — Vencimiento automático (cron)
 **Precondición:** Préstamo activo con fecha anterior a 30 días.  
@@ -216,21 +218,46 @@ curl "http://localhost:8069/api/book?isbn=9780596520830"
 ```bash
 curl "http://localhost:8069/api/book?isbn=9780596520830"
 ```
-**Resultado:** JSON con disponibilidad y datos del libro.
+**Resultado:** HTTP 200 OK + JSON con disponibilidad y datos del libro.
 
 ### CP-08 — API REST ISBN inexistente
 ```bash
 curl "http://localhost:8069/api/book?isbn=0000000000000"
 ```
-**Resultado:** JSON con mensaje de error.
+**Resultado:** HTTP 404 Not Found + JSON con mensaje de error.
 
 ### CP-09 — Préstamo desde POS con libro no disponible
 **Pasos:** Abrir POS → seleccionar cliente socio → agregar libro no disponible → confirmar pago.  
-**Resultado:** Error emergente: _"El libro no está disponible para préstamo."_
+**Resultado:** Error emergente: _"El libro no está disponible para préstamo."_  
 
 ### CP-10 — Devolución manual
 **Pasos:** Biblioteca → Préstamos → abrir préstamo activo → clic en "Marcar Devuelto".  
 **Resultado:** Estado cambia a "Devuelto", libro vuelve a "Disponible".
+
+---
+
+## Capturas
+
+### Dashboard principal
+![Dashboard](screenshots/dashboard.png)
+
+### Gestión de socios
+![Members](screenshots/members.png)
+
+### Catálogo de libros
+![Books](screenshots/books.png)
+
+### Gestión de préstamos
+![Loans](screenshots/loans.png)
+
+### Portal del socio
+![Portal](screenshots/portal.png)
+
+### Punto de Venta (POS)
+![POS](screenshots/pos.png)
+
+### API REST en funcionamiento
+![API](screenshots/api.png)
 
 ---
 
@@ -250,6 +277,15 @@ Cambiar el estado a "Atrasado" permite filtrar, reportar y bloquear renovaciones
 
 **¿Por qué heredar `mail.thread` en `library.loan`?**  
 Para poder usar `message_post` y enviar notificaciones de correo desde el modelo de préstamo al detectar vencimientos.
+
+---
+
+## Limitaciones conocidas
+
+- El envío de correos requiere configuración SMTP externa.
+- El endpoint REST no implementa autenticación.
+- La integración POS asume que cada libro posee un producto asociado.
+- Las pruebas fueron realizadas sobre Odoo 19 Community Edition.
 
 ---
 
